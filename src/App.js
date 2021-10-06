@@ -8,6 +8,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <h2>Add an item to the todo-list</h2>
         <TodoList />
       </header>
     </div>

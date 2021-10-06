@@ -13,10 +13,7 @@ export default function TodoList() {
     const [todos, setTodos] = useState([]);
 
     const AddTodo = () => {
-        setTodos([...todos, {
-            date: thing.date,
-            desc: thing.desc
-        }]);
+        setTodos([...todos, thing]);
     }
 
     return(
@@ -33,7 +30,8 @@ export default function TodoList() {
             /><br/>
             <button onClick={AddTodo}> Add </button>
             <table>
-                <tbody>    
+                <tbody>
+                <tr><th>Date</th><th>Description</th></tr>
                 {
                     todos.map((todo, i) =>
                     <tr key={i}>
