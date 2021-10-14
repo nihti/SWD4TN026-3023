@@ -13,6 +13,7 @@ function App() {
      * Enable the floating filter to each column in your todolist 
      * (See the ag-grid documentation).
      * Enable also row animation and see how it works when you sort or filter the grid.
+     * 
     */
 
   const [thing, setThing] = useState({date: '', desc: '', priority: ''});
