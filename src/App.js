@@ -1,15 +1,21 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useRef } from 'react';
 import TodoList from './components/TodoTable';
 import './App.css';
 import logo from './logo.svg';
+import {AgGridReact} from 'ag-grid-react';
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-material.css';
 
 function App() {
     /**
-   * Split your todo list application to separate components: App and TodoTable. 
-   * The App component contains button and input elements. 
-   */
+     * Implement todolist app using the ag-grid component 
+     * according to instructions in the lecture material.
+     * Enable the floating filter to each column in your todolist 
+     * (See the ag-grid documentation).
+     * Enable also row animation and see how it works when you sort or filter the grid.
+    */
 
-  const [thing, setThing] = useState({date: '', desc: ''});
+  const [thing, setThing] = useState({date: '', desc: '', priority: ''});
   const [todos, setTodos] = useState([]);
 
   // adding todos
@@ -19,20 +25,36 @@ function App() {
   }
 
   // deleteRow function is going to be passed as a prop to TodoTable
-  const deleteRow = (index) => { 
+  const deleteRow = (row) => { 
+    // state changes => ui re-renders
     setTodos(
         // only index-argument is needed (empty first argument _)
         // indexes are being compared 
         // todos-list is filtered by items that are NOT the index passed as an argument from the button onClick
-        todos.filter((_, i) => i !== index)
+        todos.filter((_, i) => i !== row)
     );
   }
 
+  const deleteTodo = () => {
+    if (gridRef.current.getSelectedNodes().length > 0) {
+      setTodos(todos.filter((todo, index) => index !== gridRef.current.getSelectedNodes()[0].childIndex));
+    } else {
+      alert('Select the row to be deleted first');
+    }
+  }
+
+  const gridRef = useRef();
+
+  const columns = [
+    {field: 'desc', sortable: true, filter: true, floatingFilter: true, flex: 1},
+    {field: 'date', sortable: true, filter: true, floatingFilter: true, flex: 1},
+    {field: 'priority', sortable: true, filter: true, floatingFilter: true, flex: 1,
+      cellStyle: params => params.value === 'High' ? {color: 'red'} : {color: 'black'}}
+  ];
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <h2>Simple Todolist</h2>
         <form onSubmit={AddTodo} className='right'>
             <label>Date </label>
@@ -41,19 +63,35 @@ function App() {
                 value={thing.date} 
                 onChange={ e => setThing({...thing, date: e.target.value}) } 
             />
-            <br/>
-            <label>Description </label>
+            <label> Description </label>
             <input 
                 type='text'
                 value={thing.desc} 
                 onChange={ e => setThing({...thing, desc: e.target.value}) } 
+            />
+            <label> Priority </label>
+            <input 
+                type='text'
+                value={thing.priority} 
+                onChange={ e => setThing({...thing, priority: e.target.value}) } 
                 // last input launches addtodo-function when Enter-key is pressed
                 onKeyDown={ e => {e.key==='Enter' && AddTodo()} } 
             />
-            <br/>
             <input type='submit' value='Add' /> 
+            <button onClick={deleteTodo}>Delete</button>
         </form>
-        <TodoList todos={todos} delete={deleteRow}/>
+
+        <div className="ag-theme-material" style={{height: 400, width: '100%'}}>
+           <AgGridReact 
+            ref={gridRef}
+            onGridReady={ params => gridRef.current = params.api }
+            rowSelection="single"
+            rowData={todos}
+            columnDefs={columns}
+            animateRows={true}
+           />
+       </div>
+
       </header>
     </div>
   );

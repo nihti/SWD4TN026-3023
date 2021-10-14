@@ -5,13 +5,12 @@ export default function TodoList(props) {
     The TodoTable component is stateless component that contains the todo table.
     Hint! You can also pass delete function to TodoTable by using props.
      */
-    
 
     // TodoTable component has now two properties: todos and delete. 
     return(
         <Fragment>
             <table>
-                <tbody>    
+                <tbody> 
                 {
                     props.todos.map((todo, i) =>
                     <tr key={i} >
