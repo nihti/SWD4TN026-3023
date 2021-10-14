@@ -25,17 +25,6 @@ function App() {
       setTodos([...todos, thing]);
   }
 
-  // deleteRow function is going to be passed as a prop to TodoTable
-  const deleteRow = (row) => { 
-    // state changes => ui re-renders
-    setTodos(
-        // only index-argument is needed (empty first argument _)
-        // indexes are being compared 
-        // todos-list is filtered by items that are NOT the index passed as an argument from the button onClick
-        todos.filter((_, i) => i !== row)
-    );
-  }
-
   const deleteTodo = () => {
     if (gridRef.current.getSelectedNodes().length > 0) {
       setTodos(todos.filter((todo, index) => index !== gridRef.current.getSelectedNodes()[0].childIndex));
@@ -81,8 +70,8 @@ function App() {
             <input type='submit' value='Add' /> 
             <button onClick={deleteTodo}>Delete</button>
         </form>
-
-        <div className="ag-theme-material" style={{height: 400, width: '100%'}}>
+        <p></p>
+        <div className="ag-theme-material" style={{height: 500, width: '100%'}}>
            <AgGridReact 
             ref={gridRef}
             onGridReady={ params => gridRef.current = params.api }
