@@ -8,7 +8,7 @@ import ApolloClient from 'apollo-boost';
 
 // apollo client request 
 const client = new ApolloClient({
-  uri: 'https://api.graphql.jobs',
+  uri: 'https://countries.trevorblades.com/',
   cache: new InMemoryCache()
 });
 

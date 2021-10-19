@@ -1,14 +1,13 @@
 import './App.css';
-import Companies from './components/Companies';
-import Places from './components/Places';
+import Countries from './components/Countries';
 
 /**
  * Instructions: 
  * https://www.apollographql.com/docs/react/get-started/
  * Data:
- * https://graphql.jobs
+ * https://countries.trevorblades.com/
  * Test queries:
- * https://api.graphql.jobs/
+ * https://countries.trevorblades.com/
  */
 
 function App() {
@@ -16,8 +15,7 @@ function App() {
   return (
     <div>
       <header className="App-header">
-        <Companies />
-        <Places />
+        <Countries />
       </header>
     </div>
   );
