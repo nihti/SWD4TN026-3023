@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
 
 export default function TodoList() {
-    /**
-     *  Create state that contains todo object: 
-     *  {description: ’’, date: ’’}
-     *  addTodo method: insert todo objects inside todos array
-     *  // Enter-key adds input values todo-list too
-     *  onKeyDown={ e => {e.key==='Enter' && AddTodo()} } 
-     */
     
     const [thing, setThing] = useState({date: '', desc: ''});
     const [todos, setTodos] = useState([]);
