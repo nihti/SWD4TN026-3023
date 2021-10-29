@@ -2,14 +2,18 @@ import React, { Fragment, useState }  from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import DatePicker from '@mui/lab/DatePicker';
-import { format } from 'date-fns'
+import format from 'date-fns/format';
 
 export default function TodoList() {
-    const [todo, setTodo] = useState({desc: '', date: new Date()});
-    const [todos, setTodos] = useState([]);
+    const [todo, setTodo] = useState({ desc: '', date: '' });
+    const [todos, setTodos] = useState([]); 
+    const [theDate, setTheDate] = useState(new Date());
     
-    const setDate = (e) => {
-        setTodo({ ...todo, date: format(e, 'dd/MM/yyyy') });
+    console.log(todo.date);
+
+    const setDate = (d) => {
+        setTheDate(d);
+        setTodo({...todo, date: format(d, 'dd/MM/yyyy')});
     }
   
     const setDesc = (e) => {
@@ -18,7 +22,7 @@ export default function TodoList() {
 
     const addTodo = (e) => {
         e.preventDefault();
-        setTodos([...todos, todo]);
+        setTodos([ ...todos, {...todo} ]);
     }
   
     return (
@@ -26,7 +30,7 @@ export default function TodoList() {
         <DatePicker 
             type="date" 
             name="date" 
-            value={todo.date} 
+            value={theDate} 
             onChange={date => setDate(date)}
             renderInput={(params) => <TextField {...params} />}
             />
