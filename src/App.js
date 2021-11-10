@@ -1,18 +1,17 @@
-import logo from './logo.svg';
-import './components/Todolist';
+import React, {Fragment, useState} from 'react';
 import './App.css';
-import TodoList from './components/Todolist';
+import Carlist from './components/Carlist';
 
-function App() {
+export default function App() {
+const [value, setValue] = useState('home');
+
+  const handleChange = (_, val) => {
+    setValue(val);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h2>Add an item to the todo-list</h2>
-        <TodoList />
-      </header>
-    </div>
+    <Fragment>
+      <Carlist />
+    </Fragment>
   );
 }
-
-export default App;

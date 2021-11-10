@@ -1,47 +1,54 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState }  from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import DatePicker from '@mui/lab/DatePicker';
+import format from 'date-fns/format';
 
 export default function TodoList() {
-    /**
-     *  Create state that contains todo object: 
-     *  {description: ’’, date: ’’}
-     *  addTodo method: insert todo objects inside todos array
-     *  // Enter-key adds input values todo-list too
-     *  onKeyDown={ e => {e.key==='Enter' && AddTodo()} } 
-     */
+    const [todo, setTodo] = useState({ desc: '', date: '' });
+    const [todos, setTodos] = useState([]); 
+    const [theDate, setTheDate] = useState(new Date());
     
-    const [thing, setThing] = useState({date: '', desc: ''});
-    const [todos, setTodos] = useState([]);
+    console.log(todo.date);
 
-    const AddTodo = () => {
-        setTodos([...todos, thing]);
+    const setDate = (d) => {
+        setTheDate(d);
+        setTodo({...todo, date: format(d, 'dd/MM/yyyy')});
     }
+  
+    const setDesc = (e) => {
+      setTodo({...todo, desc: e.target.value});
+    } 
 
-    return(
-        <div className='right'>
-            <label>Date </label>
-            <input 
-                value={thing.date} 
-                onChange={ e => setThing({...thing, date: e.target.value}) } 
+    const addTodo = (e) => {
+        e.preventDefault();
+        setTodos([ ...todos, {...todo} ]);
+    }
+  
+    return (
+      <Fragment>
+        <DatePicker 
+            type="date" 
+            name="date" 
+            value={theDate} 
+            onChange={date => setDate(date)}
+            renderInput={(params) => <TextField {...params} />}
             />
-            <br/><label>Description </label>
-            <input 
-                value={thing.desc} 
-                onChange={ e => setThing({...thing, desc: e.target.value}) } 
-            /><br/>
-            <button onClick={AddTodo}> Add </button>
-            <table>
-                <tbody>
-                <tr><th>Date</th><th>Description</th></tr>
-                {
-                    todos.map((todo, i) =>
-                    <tr key={i}>
-                        <td>{todo.date}</td>
-                        <td>{todo.desc}</td>
-                    </tr>
-                    )
-                }
-                </tbody>
-            </table>
-        </div>
+        <TextField 
+            type="text" 
+            name="desc" 
+            value={todo.desc} 
+            onChange={setDesc}/>
+        <Button onClick={addTodo}>Add</Button>
+        <table><tbody>
+        {
+        todos.map((todo, index) => 
+          <tr key={index}>
+            <td>{todo.date}</td>
+            <td>{todo.desc}</td>
+          </tr>)
+        }
+        </tbody></table>
+      </Fragment>
     );
 }
