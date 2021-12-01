@@ -98,4 +98,10 @@ Haetaan ensin asiakkaat. Data on osoitteessa https://customerrest.herokuapp.com/
     }
 ```
 
-Sitten tarvitsemme asiakkaan kaikki treenit. Se saadaan datasta 
+Sitten tarvitsemme asiakkaan kaikki treenit. Se saadaan datasta. Luodaan 
+
+```JS
+
+```
+
+Tarvitsee asentaa uusi riippuvuus, react-router-dom 
